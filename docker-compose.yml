@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+  nginx:
+    container_name: nginx
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
+
+  db:
+    container_name: db
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: borderless_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 3306:3306
+
+  app:
+    container_name: app
+    build:
+      context: app
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app:/app
+    depends_on:
+      -  db
+    command: [ "./gradlew", "bootRun" ]
+
+  frontend:
+    container_name: frontend
+    build:
+      context: frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/frontend
+    command: [ "yarn", "run", "dev" ]
