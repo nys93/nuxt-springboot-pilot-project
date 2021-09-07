@@ -18,16 +18,8 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @GetMapping(value="/helloWorld")
-    @CrossOrigin(origins = "http://localhost:3000/api/v1")
-    public String helloWorld() {
-        System.out.println("okk");
-        return "Hello World!";
-    }
-
-    @GetMapping("/view/ssr")
+    @GetMapping("/users")
     public ArrayList<HashMap<String, Object>> listUserswithProxy() {
-
         String name = "yousong";
         ArrayList<HashMap<String, Object>> userList = new ArrayList<HashMap<String, Object>>();
         for(int i=0; i< 1000; i++) {
@@ -37,22 +29,5 @@ public class DemoApplication {
             userList.add(user);
         }
         return userList;
-
     }
-
-    @GetMapping("/view/csr")
-    public ArrayList<HashMap<String, Object>> listUserswithoutProxy() {
-
-        String name = "daeyoung";
-        ArrayList<HashMap<String, Object>> userList = new ArrayList<HashMap<String, Object>>();
-        for(int i=0; i< 1000; i++) {
-            HashMap<String, Object> user = new HashMap<>();
-            user.put("id", i);
-            user.put("name", name+'"'+i+'"');
-            userList.add(user);
-        }
-        return userList;
-
-    }
-
 }
