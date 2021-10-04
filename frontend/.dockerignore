@@ -1,0 +1,7 @@
+/node_modules
+
+*.md
+
+*/npm-debug.log
+
+Dockerfile
