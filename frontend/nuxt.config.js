@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config()
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -21,7 +22,9 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    '~/plugins/vee-validate.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -32,13 +35,14 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/proxy',
+    '@nuxtjs/proxy'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -50,10 +54,12 @@ export default {
   proxy: {
     '/api/v1/users': {
       // target: 'http://docker.for.mac.localhost:8000',
-      target: 'http://localhost:8000',
+      target: process.env.API_URL,
       changeOrigin: true, // cross origin 허용
       secure: false,
+      ssr: true
     },
+
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -76,5 +82,14 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: [
+      'vee-validate'
+    ]
+  },
+
+  env: {
+    baseUrl: process.env.API_BASE_URL || 'http://localhost:3000'
+  }
+
 }
