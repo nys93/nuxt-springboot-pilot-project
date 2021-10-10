@@ -31,11 +31,12 @@ public class DemoApplication {
         return userList;
     }
 
-//    @PatchMapping("/test")
-//    public void insert() {
-//
-//        return "Succese";
-//    }
+    @PostMapping("/users")
+    public String insert(@RequestBody HashMap<String, Object> user) {
+        System.out.println(user);
+
+        return "Succese";
+    }
 
 
 }
